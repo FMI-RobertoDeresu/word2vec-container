@@ -4,17 +4,18 @@ import nltk
 import time
 
 app = Flask(__name__)
-app.debug = True
+app.debug = False
 
 tokenizer = nltk.tokenize.RegexpTokenizer(r'\w+')
 
 
 @app.route("/")
 def hello():
-    return "This is a word2vec container. Call method word-vec to get words embeddings."
+    return "This is a word2vec container. Call method word-vec (POST) to get words embeddings. " \
+           "Request body: { 'texts': ['Romania Bucharest'], 'useNorm': false }."
 
 
-@app.route("/word-vec", methods=["GET"])
+@app.route("/word-vec", methods=["POST"])
 def word_vec():
     start_time = time.time()
 
@@ -27,7 +28,7 @@ def word_vec():
 
         for word in words:
             words_embedding = word_vec_model.word_vec(word, content["useNorm"])
-            words_embeddings.append(words_embedding)
+            words_embeddings.append([x.item() for x in words_embedding])
 
         output.append(words_embeddings)
 
@@ -50,4 +51,4 @@ if __name__ == '__main__':
 
     # Run app
     print("Running app...")
-    app.run()
+    app.run(port=8001)
