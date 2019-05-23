@@ -30,8 +30,8 @@ def word_vec():
             if word in word_vec_model.vocab:
                 word_embedding = word_vec_model.word_vec(word, content["useNorm"])
                 words_embeddings.append([x.item() for x in word_embedding])
-            else:
-                words_embeddings.append([])
+            # else:
+            #     words_embeddings.append([])
 
         output.append(words_embeddings)
 
