@@ -6,7 +6,7 @@ import time
 app = Flask(__name__)
 app.debug = False
 
-tokenizer = nltk.tokenize.RegexpTokenizer(r'\w+')
+tokenizer = nltk.tokenize.RegexpTokenizer(r"(\w+\'\w+|\w+)")
 
 
 @app.route("/")
