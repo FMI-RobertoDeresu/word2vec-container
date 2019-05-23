@@ -27,8 +27,11 @@ def word_vec():
         words_embeddings = []
 
         for word in words:
-            words_embedding = word_vec_model.word_vec(word, content["useNorm"])
-            words_embeddings.append([x.item() for x in words_embedding])
+            if word in word_vec_model.vocab:
+                word_embedding = word_vec_model.word_vec(word, content["useNorm"])
+                words_embeddings.append([x.item() for x in word_embedding])
+            else:
+                words_embeddings.append([])
 
         output.append(words_embeddings)
 
@@ -51,4 +54,4 @@ if __name__ == '__main__':
 
     # Run app
     print("Running app...")
-    app.run(port=8001)
+    app.run(port=8001, use_reloader=False)
